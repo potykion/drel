@@ -12,6 +12,8 @@ pre-commit = "*"
 mypy = "*"
 pylint = "*"
 black = "==18.9b0"
+importlib-resources = "*"
+freezegun = "*"
 
 [requires]
 python_version = "3.6"

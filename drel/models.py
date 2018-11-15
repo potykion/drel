@@ -9,4 +9,4 @@ class LogEntry:
     request_id: str
     type: str
     content: Dict
-    datetime: datetime
+    timestamp: datetime = attr.ib(factory=lambda: datetime.now())
