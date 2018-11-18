@@ -1,8 +1,8 @@
 import json
-from typing import Union, Dict
+from typing import Any, Dict
 
 
-def to_json(str_: Union[str, bytes, None]) -> Dict:
+def to_json(object_: Any) -> Dict:
     """
     >>> to_json('{"key":"value"}')
     {'key': 'value'}
@@ -10,16 +10,21 @@ def to_json(str_: Union[str, bytes, None]) -> Dict:
     {'content': 'sam'}
     >>> to_json(b"sam")
     {'content': 'sam'}
+    >>> to_json({'key': 'value'})
+    {'key': 'value'}
     """
-    str_ = to_str(str_)
+    if isinstance(object_, Dict):
+        return object_
+
+    object_ = to_str(object_)
 
     try:
-        return json.loads(str_)
+        return json.loads(object_)
     except (ValueError, TypeError):
-        return {"content": str_}
+        return {"content": object_}
 
 
-def to_str(str_or_bytes: Union[str, bytes, None]) -> str:
+def to_str(object_: Any) -> str:
     """
     >>> to_str(b"ass")
     'ass'
@@ -27,11 +32,13 @@ def to_str(str_or_bytes: Union[str, bytes, None]) -> str:
     'ass'
     >>> to_str(None)
     ''
+    >>> to_str({"op": "oppa"})
+    "{'op': 'oppa'}"
     """
-    if str_or_bytes is None:
+    if object_ is None:
         return ""
 
-    if isinstance(str_or_bytes, bytes):
-        return str_or_bytes.decode("utf-8")
+    if isinstance(object_, bytes):
+        return object_.decode("utf-8")
 
-    return str_or_bytes
+    return str(object_)
