@@ -8,26 +8,18 @@ from drel.utils import to_json
 
 @pytest.fixture
 def post_requests_request_with_form_data():
-    request = Request(
-        "POST",
-        "https://httpbin.org/post",
-        data={"param1": "value"},
-    )
+    request = Request("POST", "https://httpbin.org/post", data={"param1": "value"})
     return request.prepare()
 
 
 @pytest.fixture
 def post_requests_request_with_json_data():
-    request = Request(
-        "POST",
-        "https://httpbin.org/post",
-        json={"param1": "value"},
-    )
+    request = Request("POST", "https://httpbin.org/post", json={"param1": "value"})
     return request.prepare()
 
 
 def test_requests_requests_to_log_entry_with_form_data(
-        post_requests_request_with_form_data: PreparedRequest
+    post_requests_request_with_form_data: PreparedRequest
 ):
     actual_log_entry = requests_request_to_log_entry(post_requests_request_with_form_data)
     assert actual_log_entry == LogEntry(
