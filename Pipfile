@@ -15,6 +15,7 @@ pylint = "*"
 black = "==18.9b0"
 importlib-resources = "*"
 freezegun = "*"
+responses = "*"
 
 [requires]
 python_version = "3.6"

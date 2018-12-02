@@ -19,3 +19,9 @@ class RequestLog:
     url: str
     data: Dict
     headers: Dict = attr.ib(factory=dict)
+
+
+@attr.s(auto_attribs=True)
+class ResponseLog:
+    status_code: int
+    data: Dict
