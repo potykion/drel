@@ -7,8 +7,8 @@ Django request ElasticSearch logging
 ```pydocstring
 >>> import requests
 >>> response = requests.post("https://httpbin.org/post", {"param1": "value1"})
->>> from drel import log_requests_request
->>> log_requests_request(response.request, response)
+>>> from drel.requests import log
+>>> log(response.request, response)
 ```
 
 This will insert request and response to ElasticSearch index called `logs-{week_start}-{week_end}`:
@@ -18,9 +18,7 @@ This will insert request and response to ElasticSearch index called `logs-{week_
     "type": "request",
     "request": {
       "url": "https://httpbin.org/post",
-      "data": {
-        "param1": "value1"
-      },
+      "data": {"param1": "value1"},
       "headers": {}
     },
     "response": {
