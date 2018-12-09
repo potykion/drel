@@ -11,7 +11,7 @@ from requests import Request
 from drel.core.builders import BaseFullRequestLogBuilder
 from drel.core.models import RequestLog
 from drel.core.models import ResponseLog
-from drel.core.utils import log_to_es
+from drel.core.es import log_to_es
 from drel.core.utils import to_json
 
 

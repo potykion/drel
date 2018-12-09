@@ -6,12 +6,6 @@ from typing import Any, Dict
 from typing import Optional
 from typing import Tuple
 
-from marshmallow.schema import BaseSchema
-
-from drel.core.config import es
-from drel.core.models import FullRequestLog
-from drel.core.schemas import FullRequestLogSchema
-
 
 def to_json(object_: Any) -> Dict:
     """
@@ -67,11 +61,6 @@ def datetime_to_week_range(datetime_: Optional[datetime] = None) -> Tuple[dateti
     return week_start, week_end
 
 
-def get_index_name() -> str:
-    week_start, week_end = datetime_to_week_range()
-    return f"logs-{week_start}-{week_end}"
-
-
 def build_log_type(base_type: str, type_prefix: Optional[str] = None) -> str:
     """
     >>> build_log_type("request")
@@ -83,17 +72,6 @@ def build_log_type(base_type: str, type_prefix: Optional[str] = None) -> str:
         return f"{type_prefix}_{base_type}"
 
     return base_type
-
-
-def log_to_es(log: FullRequestLog, **kwargs: Any) -> bool:
-    schema: BaseSchema = FullRequestLogSchema()
-    doc, _ = schema.dump(log)
-    return write_to_es(doc, **kwargs)
-
-
-def write_to_es(doc: Dict, index: Optional[str] = None) -> bool:
-    index = index or get_index_name()
-    return es.index(index, "default", doc)
 
 
 def format_datetime(datetime_: datetime) -> str:

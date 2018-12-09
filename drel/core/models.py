@@ -3,7 +3,7 @@ from typing import Dict
 
 import attr
 
-from drel.core.config import APPLICATION
+from drel.core import config
 from drel.core.config import request_id_storage
 
 
@@ -27,4 +27,4 @@ class FullRequestLog:
     response: ResponseLog
     request_id: str = attr.ib(default=request_id_storage.request_id)
     timestamp: datetime = attr.ib(factory=lambda: datetime.now())
-    app: str = attr.ib(default=APPLICATION)
+    app: str = attr.ib(default=config.APPLICATION)
