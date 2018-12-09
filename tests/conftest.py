@@ -13,7 +13,7 @@ def log_builder():
 
 @pytest.fixture()
 def requests_request():
-    return Request("POST", "https://httpbin.org/post", data={"param1": "value"}).prepare()
+    return Request("POST", "https://httpbin.org/post", data={"param1": "value"})
 
 
 @pytest.fixture()

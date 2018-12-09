@@ -6,9 +6,10 @@ Django request ElasticSearch logging
 
 ```pydocstring
 >>> import requests
->>> response = requests.post("https://httpbin.org/post", {"param1": "value1"})
+>>> request = requests.Request("POST", "https://httpbin.org/post", {"param1": "value1"})
+>>> response = requests.Session().send(request.prepare())
 >>> from drel.requests import log
->>> log(response.request, response)
+>>> log(request, response)
 ```
 
 This will insert request and response to ElasticSearch index called `logs-{week_start}-{week_end}`:

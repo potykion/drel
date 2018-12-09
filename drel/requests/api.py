@@ -3,6 +3,7 @@ from typing import Optional
 
 from requests import PreparedRequest
 from requests import Response
+from requests import Request
 
 from drel.core.builders import BaseFullRequestLogBuilder
 from drel.core.models import RequestLog
@@ -18,10 +19,9 @@ def log(request: PreparedRequest, response: Response, type_prefix: Optional[str]
 
 
 class RequestsFullRequestLogBuilder(BaseFullRequestLogBuilder):
-    def request_to_log(self, request: PreparedRequest) -> RequestLog:
+    def request_to_log(self, request: Request) -> RequestLog:
         assert request.url
-        # todo works incorrect for form data
-        return RequestLog(request.url, to_json(request.body), dict(request.headers))
+        return RequestLog(request.url, request.data or request.json, dict(request.headers))
 
     def response_to_log(self, response: Response) -> ResponseLog:
         data = self.__get_response_data(response)
