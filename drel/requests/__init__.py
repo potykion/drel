@@ -1,1 +1,1 @@
-from .api import log
+from .api import log, post

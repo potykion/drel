@@ -5,10 +5,8 @@ Django request ElasticSearch logging
 ## Requests support
 
 ```pydocstring
->>> import requests
->>> request = requests.Request("POST", "https://httpbin.org/post", {"param1": "value1"})
->>> response = requests.Session().send(request.prepare())
->>> from drel.requests import log
+>>> from drel.requests import post, log
+>>> request, response = post("https://httpbin.org/post", {"param1": "value1"})
 >>> log(request, response)
 ```
 

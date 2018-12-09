@@ -1,6 +1,9 @@
+from typing import Any
 from typing import Dict
 from typing import Optional
+from typing import Tuple
 
+import requests
 from requests import PreparedRequest
 from requests import Response
 from requests import Request
@@ -32,3 +35,10 @@ class RequestsFullRequestLogBuilder(BaseFullRequestLogBuilder):
             return response.json()
         except ValueError:
             return to_json(response.content)
+
+
+def post(*args: Any, **kwargs: Any) -> Tuple[Request, Response]:
+    request = requests.Request("POST", *args, **kwargs)
+    session = requests.Session()
+    response = session.send(request.prepare())
+    return request, response
