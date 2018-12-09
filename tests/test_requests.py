@@ -61,14 +61,9 @@ def test_500_response_to_log(log_builder, requests_request):
 def test_full_request_to_log(
     log_builder: RequestsFullRequestLogBuilder, requests_request, requests_response
 ):
-    responses.add(requests_response)
-
-    session = Session()
-    response = session.send(requests_request.prepare())
-
-    actual_log = log_builder(requests_request, response)
+    actual_log = log_builder(requests_request, requests_response)
     assert actual_log == FullRequestLog(
         "request",
         log_builder.request_to_log(requests_request),
-        log_builder.response_to_log(response),
+        log_builder.response_to_log(requests_response),
     )
