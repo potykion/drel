@@ -2,7 +2,7 @@
 
 Django request ElasticSearch logging
 
-## [WIP] Requests support
+## Requests support
 
 ```pydocstring
 >>> import requests
@@ -15,6 +15,7 @@ This will insert request and response to ElasticSearch index called `logs-{week_
 
 ```json
 {
+    "timestamp": "2018-12-09 02:22:22",
     "type": "request",
     "request": {
       "url": "https://httpbin.org/post",
@@ -22,10 +23,10 @@ This will insert request and response to ElasticSearch index called `logs-{week_
       "headers": {}
     },
     "response": {
-      "status_code": 200,
+      "status": 200,
       "data": {"args": {}, "data": "", "files": {}, "form": {"param1": "value1"}, "headers": {"Accept": "*/*", "Accept-Encoding": "gzip, deflate", "Connection": "close", "Content-Length": "13", "Content-Type": "application/x-www-form-urlencoded", "Host": "httpbin.org", "User-Agent": "python-requests/2.19.1"}, "json": null, "origin": "130.193.67.76", "url": "https://httpbin.org/post"}
     },
-    "app": "sample_app",
+    "app": "default",
     "request_id": "2180930f-859b-4aef-8770-17107fff1170"
 }
 ```

@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 attrs = "*"
 requests = "*"
+elasticsearch = "*"
+marshmallow = "*"
 
 [dev-packages]
 pytest = "*"
@@ -16,6 +18,7 @@ black = "==18.9b0"
 importlib-resources = "*"
 freezegun = "*"
 responses = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.6"
