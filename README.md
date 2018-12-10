@@ -2,6 +2,32 @@
 
 Django request ElasticSearch logging
 
+## [WIP] Django support
+
+To log every django request insert logging middleware before AuthenticationMiddleware:
+
+```python
+# settings.py
+
+MIDDLEWARE = [
+    ...,
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "drel.django.LoggingMiddleware",
+]
+
+```
+
+To change settings override config module values:
+
+```python
+# settings.py
+
+from drel import config
+
+config.APPLICATION = "django_app"
+``` 
+
+
 ## Requests support
 
 ```pydocstring
