@@ -1,13 +1,13 @@
 from typing import Any, Dict, Optional, Tuple
 
 import requests
-from requests import PreparedRequest, Response, Request
+from requests import Response, Request
 
 from drel.core import BaseFullRequestLogBuilder, RequestLog, ResponseLog, log_to_es
 from drel.utils import to_json
 
 
-def log(request: PreparedRequest, response: Response, type_prefix: Optional[str] = None) -> bool:
+def log(request: Request, response: Response, type_prefix: Optional[str] = None) -> bool:
     log_entry = RequestsFullRequestLogBuilder(type_prefix)(request, response)
 
     return log_to_es(log_entry)
