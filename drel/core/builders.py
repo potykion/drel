@@ -1,10 +1,7 @@
-from typing import Any
-from typing import Optional
+from typing import Any, Optional
 
-from drel.core.models import FullRequestLog
-from drel.core.models import RequestLog
-from drel.core.models import ResponseLog
-from drel.core.utils import build_log_type
+from drel.utils import build_log_type
+from .models import FullRequestLog, RequestLog, ResponseLog
 
 
 class BaseFullRequestLogBuilder:

@@ -1,18 +1,10 @@
-from typing import Any
-from typing import Dict
-from typing import Optional
-from typing import Tuple
+from typing import Any, Dict, Optional, Tuple
 
 import requests
-from requests import PreparedRequest
-from requests import Response
-from requests import Request
+from requests import PreparedRequest, Response, Request
 
-from drel.core.builders import BaseFullRequestLogBuilder
-from drel.core.models import RequestLog
-from drel.core.models import ResponseLog
-from drel.core.es import log_to_es
-from drel.core.utils import to_json
+from drel.core import BaseFullRequestLogBuilder, RequestLog, ResponseLog, log_to_es
+from drel.utils import to_json
 
 
 def log(request: PreparedRequest, response: Response, type_prefix: Optional[str] = None) -> bool:

@@ -1,6 +1,13 @@
+import pytest
 from requests import Request
 
-from drel.core.utils import format_datetime
+from drel.core.schemas import FullRequestLogSchema
+from drel.utils import format_datetime
+
+
+@pytest.fixture()
+def full_request_log_schema():
+    return FullRequestLogSchema()
 
 
 def test_full_request_log_to_json(

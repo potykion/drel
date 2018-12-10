@@ -4,7 +4,7 @@ from typing import Callable
 
 from elasticsearch import Elasticsearch
 
-from drel.core.utils import datetime_to_week_range
+from drel.utils import datetime_to_week_range
 
 request_id_storage = threading.local()
 request_id_storage.request_id = str(uuid.uuid4())
