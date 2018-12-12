@@ -8,6 +8,7 @@ attrs = "*"
 requests = "*"
 elasticsearch = "*"
 marshmallow = "*"
+django = "*"
 
 [dev-packages]
 pytest = "*"
