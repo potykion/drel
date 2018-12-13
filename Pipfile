@@ -9,7 +9,6 @@ requests = "*"
 elasticsearch = "*"
 marshmallow = "*"
 django = "*"
-pytest-pythonpath = "*"
 
 [dev-packages]
 pytest = "*"
@@ -22,6 +21,7 @@ freezegun = "*"
 responses = "*"
 coverage = "*"
 pytest-django = "*"
+pytest-pythonpath = "*"
 
 [requires]
 python_version = "3.6"
