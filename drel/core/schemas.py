@@ -18,6 +18,7 @@ class ResponseLogSchema(Schema):
 class FullRequestLogSchema(Schema):
     request = fields.Nested(RequestLogSchema)
     response = fields.Nested(ResponseLogSchema)
+    timestamp = fields.DateTime()
 
     class Meta:
         fields = ("type", "request", "response", "request_id", "timestamp", "app")

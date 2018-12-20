@@ -22,6 +22,8 @@ responses = "*"
 coverage = "*"
 pytest-django = "*"
 pytest-pythonpath = "*"
+pytest-dotenv = "*"
+pytest-freezegun = "*"
 
 [requires]
 python_version = "3.6"

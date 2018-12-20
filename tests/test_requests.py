@@ -1,12 +1,15 @@
+import os
+
 import pytest
 import responses
 from requests import Request
 from requests import Session
 
+from drel.core.es import get_from_es
 from drel.core.models import FullRequestLog
 from drel.core.models import RequestLog
 from drel.core.models import ResponseLog
-from drel.requests.api import RequestsFullRequestLogBuilder
+from drel.requests.api import RequestsFullRequestLogBuilder, log
 
 
 def test_request_with_data_to_log(log_builder):
@@ -57,7 +60,6 @@ def test_500_response_to_log(log_builder, requests_request):
     )
 
 
-@responses.activate
 def test_full_request_to_log(
         log_builder: RequestsFullRequestLogBuilder, requests_request, requests_response
 ):
@@ -67,3 +69,12 @@ def test_full_request_to_log(
         log_builder.response_to_log(requests_response),
     )
     assert actual_log == expected_log
+
+
+@pytest.mark.skipif(not os.getenv("ELASTIC_SEARCH_RUN_TESTS"),
+                    reason="Set ELASTIC_SEARCH_RUN_TESTS env to enable Elastic Search tests")
+def test_requests_log_insert_to_es(freezer, requests_request, requests_response, serialized_full_request_log,
+                                   test_es_index):
+    doc_id = log(requests_request, requests_response)
+    actual_full_request_log = get_from_es(doc_id)
+    assert actual_full_request_log == serialized_full_request_log

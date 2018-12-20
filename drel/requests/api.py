@@ -7,7 +7,7 @@ from drel.core import BaseFullRequestLogBuilder, RequestLog, ResponseLog, log_to
 from drel.utils import to_json
 
 
-def log(request: Request, response: Response, type_: Optional[str] = None) -> bool:
+def log(request: Request, response: Response, type_: Optional[str] = None) -> str:
     log_entry = RequestsFullRequestLogBuilder(type_)(request, response)
 
     return log_to_es(log_entry)
