@@ -41,7 +41,7 @@ This will insert request and response to ElasticSearch index called `logs-{week_
 ```json
 {
     "timestamp": "2018-12-09 02:22:22",
-    "type": "request",
+    "type": "default",
     "request": {
       "url": "https://httpbin.org/post",
       "data": {"param1": "value1"},
