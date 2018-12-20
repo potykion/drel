@@ -10,6 +10,10 @@ from drel.requests.api import RequestsFullRequestLogBuilder
 def log_builder():
     return RequestsFullRequestLogBuilder()
 
+@pytest.fixture()
+def log_builder_with_type():
+    return RequestsFullRequestLogBuilder(type_="requests")
+
 
 @pytest.fixture()
 def requests_request():
@@ -34,3 +38,6 @@ def full_request_log(log_builder, requests_request, requests_response):
     return log_builder(requests_request, requests_response)
 
 
+@pytest.fixture()
+def full_request_log_with_type(log_builder_with_type, requests_request, requests_response):
+    return log_builder_with_type(requests_request, requests_response)
