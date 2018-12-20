@@ -41,7 +41,4 @@ def get_request_headers(request: HttpRequest) -> Dict:
 
 
 def get_response_data(response: HttpResponse) -> Dict:
-    try:
-        return response.json()
-    except ValueError:
-        return to_json(response.content)
+    return to_json(response.content)

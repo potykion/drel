@@ -1,4 +1,6 @@
-from typing import Dict
+import os
+from operator import itemgetter
+from typing import Dict, Optional, List
 
 from marshmallow.schema import BaseSchema
 
@@ -14,10 +16,20 @@ def log_to_es(log: FullRequestLog) -> str:
 
 
 def write_to_es(doc: Dict) -> str:
-    return config.ELASTIC_SEARCH.index(config.INDEX_NAME_GETTER(), config.DOC_TYPE, doc)["_id"]
+    refresh = bool(os.getenv("ELASTIC_SEARCH_REFRESH_ON_INSERT"))
+    doc = config.ELASTIC_SEARCH.index(
+        config.INDEX_NAME_GETTER(), config.DOC_TYPE, doc, refresh=refresh
+    )
+    return doc["_id"]
 
 
 def get_from_es(doc_id: str) -> Dict:
     return config.ELASTIC_SEARCH.get(config.INDEX_NAME_GETTER(), config.DOC_TYPE, doc_id)[
         "_source"
     ]
+
+
+def get_es_docs(index: Optional[str] = None, size: int = 20) -> List[Dict]:
+    index = index or config.INDEX_NAME_GETTER()
+    result = config.ELASTIC_SEARCH.search(index=index, size=size)
+    return list(map(itemgetter("_source"), result["hits"]["hits"]))

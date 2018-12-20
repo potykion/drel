@@ -6,10 +6,8 @@ from drel.core.schemas import FullRequestLogSchema
 from drel.utils import format_datetime
 
 
-
-
 def test_full_request_log_to_json(
-        requests_request: Request, full_request_log, requests_response, full_request_log_schema
+    requests_request: Request, full_request_log, requests_response, full_request_log_schema
 ):
     json_, _ = full_request_log_schema.dump(full_request_log)
     assert json_ == {
@@ -27,7 +25,7 @@ def test_full_request_log_to_json(
 
 
 def test_full_request_log_with_non_default_type(
-        full_request_log_with_type: FullRequestLog, full_request_log_schema: FullRequestLogSchema
+    full_request_log_with_type: FullRequestLog, full_request_log_schema: FullRequestLogSchema
 ):
     type_ = full_request_log_with_type.type
 
