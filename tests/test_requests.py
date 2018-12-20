@@ -32,7 +32,7 @@ def test_request_with_json_to_log(log_builder):
     ],
 )
 def test_response_to_log(
-    log_builder: RequestsFullRequestLogBuilder, requests_request, response_params
+        log_builder: RequestsFullRequestLogBuilder, requests_request, response_params
 ):
     responses.add("POST", requests_request.url, **response_params)
 
@@ -59,11 +59,11 @@ def test_500_response_to_log(log_builder, requests_request):
 
 @responses.activate
 def test_full_request_to_log(
-    log_builder: RequestsFullRequestLogBuilder, requests_request, requests_response
+        log_builder: RequestsFullRequestLogBuilder, requests_request, requests_response
 ):
     actual_log = log_builder(requests_request, requests_response)
-    assert actual_log == FullRequestLog(
-        "request",
+    expected_log = FullRequestLog(
         log_builder.request_to_log(requests_request),
         log_builder.response_to_log(requests_response),
     )
+    assert actual_log == expected_log

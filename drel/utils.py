@@ -61,19 +61,6 @@ def datetime_to_week_range(datetime_: Optional[datetime] = None) -> Tuple[dateti
     return week_start, week_end
 
 
-def build_log_type(base_type: str, type_prefix: Optional[str] = None) -> str:
-    """
-    >>> build_log_type("request")
-    'request'
-    >>> build_log_type("request", "httpbin")
-    'httpbin_request'
-    """
-    if type_prefix:
-        return f"{type_prefix}_{base_type}"
-
-    return base_type
-
-
 def format_datetime(datetime_: datetime) -> str:
     """
     >>> from dateutil.parser import parse

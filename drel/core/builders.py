@@ -1,18 +1,17 @@
 from typing import Any, Optional
 
-from drel.utils import build_log_type
-from .models import FullRequestLog, RequestLog, ResponseLog
+from .models import FullRequestLog, RequestLog, ResponseLog, DEFAULT_LOG_TYPE
 
 
 class BaseFullRequestLogBuilder:
-    def __init__(self, type_prefix: Optional[str] = None):
-        self.type_prefix = type_prefix
+    def __init__(self, type_: Optional[str] = None):
+        self.type = type_ or DEFAULT_LOG_TYPE
 
     def __call__(self, request: Any, response: Any) -> FullRequestLog:
         return FullRequestLog(
-            type=build_log_type("request", self.type_prefix),
             request=self.request_to_log(request),
             response=self.response_to_log(response),
+            type=self.type,
         )
 
     def request_to_log(self, request: Any) -> RequestLog:
