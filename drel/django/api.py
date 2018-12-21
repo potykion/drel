@@ -13,7 +13,7 @@ class LoggingMiddleware:
     def __call__(self, request: HttpRequest) -> HttpResponse:
         response = self.get_response(request)
 
-        log_entry = DjangoFullRequestLogBuilder()(request, response)
+        log_entry = DjangoFullRequestLogBuilder(user=request.user)(request, response)
         log_to_es(log_entry)
 
         return response

@@ -4,6 +4,8 @@ import uuid
 from typing import Callable
 
 from elasticsearch import Elasticsearch
+from marshmallow import Schema, fields
+from marshmallow.schema import BaseSchema
 
 from drel.utils import datetime_to_week_range
 
@@ -19,7 +21,7 @@ ELASTIC_SEARCH: Elasticsearch = Elasticsearch(
     ]
 )
 
-APPLICATION: str = "default"
+APPLICATION = "default"
 
 
 def get_index_name() -> str:
@@ -29,4 +31,15 @@ def get_index_name() -> str:
 
 INDEX_NAME_GETTER: Callable[[], str] = get_index_name
 
+
+class EmailUserSchema(Schema):
+    email = fields.Email()
+
+
+USER_SERIALIZER: BaseSchema = EmailUserSchema()
+
 DOC_TYPE = "default"
+
+DEFAULT_LOG_TYPE = "default"
+
+ELASTIC_SEARCH_REFRESH_ON_INSERT = bool(os.getenv("ELASTIC_SEARCH_REFRESH_ON_INSERT"))

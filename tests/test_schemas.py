@@ -1,4 +1,3 @@
-import pytest
 from requests import Request
 
 from drel.core import FullRequestLog
@@ -7,7 +6,7 @@ from drel.utils import format_datetime
 
 
 def test_full_request_log_to_json(
-    requests_request: Request, full_request_log, requests_response, full_request_log_schema
+        requests_request: Request, full_request_log, requests_response, full_request_log_schema
 ):
     json_, _ = full_request_log_schema.dump(full_request_log)
     assert json_ == {
@@ -25,7 +24,7 @@ def test_full_request_log_to_json(
 
 
 def test_full_request_log_with_non_default_type(
-    full_request_log_with_type: FullRequestLog, full_request_log_schema: FullRequestLogSchema
+        full_request_log_with_type: FullRequestLog, full_request_log_schema: FullRequestLogSchema
 ):
     type_ = full_request_log_with_type.type
 
@@ -34,3 +33,11 @@ def test_full_request_log_with_non_default_type(
     assert json_["type"] == type_
     assert f"{type_}_request" in json_
     assert f"{type_}_response" in json_
+
+
+def test_full_request_log_with_user(
+        full_request_log_with_user: FullRequestLog, full_request_log_schema: FullRequestLogSchema, user
+):
+    json_, _ = full_request_log_schema.dump(full_request_log_with_user)
+
+    assert json_["user"]["email"] == user["email"]

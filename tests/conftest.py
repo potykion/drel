@@ -9,13 +9,23 @@ from drel.requests.api import RequestsFullRequestLogBuilder
 
 
 @pytest.fixture()
+def user():
+    return {'email': "potykion@gmail.com"}
+
+
+@pytest.fixture()
 def log_builder():
     return RequestsFullRequestLogBuilder()
 
 
 @pytest.fixture()
 def log_builder_with_type():
-    return RequestsFullRequestLogBuilder(type_="requests")
+    return RequestsFullRequestLogBuilder(type="requests")
+
+
+@pytest.fixture()
+def log_builder_with_user(user):
+    return RequestsFullRequestLogBuilder(user=user)
 
 
 @pytest.fixture()
@@ -44,6 +54,11 @@ def full_request_log(log_builder, requests_request, requests_response):
 @pytest.fixture()
 def full_request_log_with_type(log_builder_with_type, requests_request, requests_response):
     return log_builder_with_type(requests_request, requests_response)
+
+
+@pytest.fixture()
+def full_request_log_with_user(log_builder_with_user, requests_request, requests_response):
+    return log_builder_with_user(requests_request, requests_response)
 
 
 @pytest.fixture()

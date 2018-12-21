@@ -76,8 +76,10 @@ def test_full_request_to_log(
     reason="Set ELASTIC_SEARCH_RUN_TESTS env to enable Elastic Search tests",
 )
 def test_requests_log_insert_to_es(
-    freezer, requests_request, requests_response, serialized_full_request_log, test_es_index
+    freezer, test_es_index, requests_request, requests_response, serialized_full_request_log,
 ):
     doc_id = log(requests_request, requests_response)
     actual_full_request_log = get_from_es(doc_id)
     assert actual_full_request_log == serialized_full_request_log
+
+

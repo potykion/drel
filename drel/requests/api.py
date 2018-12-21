@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Tuple
 
 import requests
 from requests import Response, Request
@@ -7,8 +7,8 @@ from drel.core import BaseFullRequestLogBuilder, RequestLog, ResponseLog, log_to
 from drel.utils import to_json
 
 
-def log(request: Request, response: Response, type_: Optional[str] = None) -> str:
-    log_entry = RequestsFullRequestLogBuilder(type_)(request, response)
+def log(request: Request, response: Response, **builder_kwargs: Any) -> str:
+    log_entry = RequestsFullRequestLogBuilder(**builder_kwargs)(request, response)
 
     return log_to_es(log_entry)
 

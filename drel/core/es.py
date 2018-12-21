@@ -1,4 +1,3 @@
-import os
 from operator import itemgetter
 from typing import Dict, Optional, List
 
@@ -16,17 +15,18 @@ def log_to_es(log: FullRequestLog) -> str:
 
 
 def write_to_es(doc: Dict) -> str:
-    refresh = bool(os.getenv("ELASTIC_SEARCH_REFRESH_ON_INSERT"))
     doc = config.ELASTIC_SEARCH.index(
-        config.INDEX_NAME_GETTER(), config.DOC_TYPE, doc, refresh=refresh
+        config.INDEX_NAME_GETTER(),
+        config.DOC_TYPE,
+        doc,
+        refresh=config.ELASTIC_SEARCH_REFRESH_ON_INSERT,
     )
     return doc["_id"]
 
 
 def get_from_es(doc_id: str) -> Dict:
-    return config.ELASTIC_SEARCH.get(config.INDEX_NAME_GETTER(), config.DOC_TYPE, doc_id)[
-        "_source"
-    ]
+    doc = config.ELASTIC_SEARCH.get(config.INDEX_NAME_GETTER(), config.DOC_TYPE, doc_id)
+    return doc["_source"]
 
 
 def get_es_docs(index: Optional[str] = None, size: int = 20) -> List[Dict]:
