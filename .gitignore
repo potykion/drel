@@ -2,3 +2,6 @@
 .pytest_cache
 .mypy_cache
 .env
+build
+dist
+drel.egg-info
