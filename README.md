@@ -4,7 +4,7 @@ Django request ElasticSearch logging
 
 ## Django support
 
-To log every django request insert logging middleware before AuthenticationMiddleware:
+To log every django request insert LoggingMiddleware before AuthenticationMiddleware:
 
 ```python
 # settings.py
@@ -13,30 +13,11 @@ MIDDLEWARE = [
     ...,
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "drel.django.LoggingMiddleware",
+    ...
 ]
-
 ```
 
-To change settings override config module values:
-
-```python
-# settings.py
-
-from drel import config
-
-config.APPLICATION = "django_app"
-``` 
-
-
-## Requests support
-
-```pydocstring
->>> from drel.requests import post, log
->>> request, response = post("https://httpbin.org/post", {"param1": "value1"})
->>> log(request, response)
-```
-
-This will insert request and response to ElasticSearch index called `logs-{week_start}-{week_end}`:
+This will insert request and response info to Elastic Search index called `logs-{week_start}-{week_end}` in following format: 
 
 ```json
 {
@@ -56,5 +37,22 @@ This will insert request and response to ElasticSearch index called `logs-{week_
 }
 ```
 
+## Requests support
 
+To log [requests](http://docs.python-requests.org/en/master/) request and response data use `drel.requests.log` function: 
 
+```pydocstring
+>>> from drel.requests import post, log
+>>> request, response = post("https://httpbin.org/post", {"param1": "value1"})
+>>> log(request, response)
+```
+
+## Configuration
+
+To change settings override `config` module values:
+
+```python
+from drel import config
+
+config.APPLICATION = "django_app"
+``` 
