@@ -1,7 +1,7 @@
 import os
 import threading
 import uuid
-from typing import Callable
+from typing import Callable, Dict
 
 from elasticsearch import Elasticsearch
 from marshmallow import Schema, fields
@@ -43,3 +43,10 @@ DOC_TYPE = "default"
 DEFAULT_LOG_TYPE = "default"
 
 ELASTIC_SEARCH_REFRESH_ON_INSERT = bool(os.getenv("ELASTIC_SEARCH_REFRESH_ON_INSERT"))
+
+
+def handle_es_exception(index: str, doc: Dict, exception: Exception) -> None:
+    raise exception
+
+
+ELASTIC_SEARCH_EXCEPTION_HANDLER: Callable[[str, Dict, Exception], None] = handle_es_exception
