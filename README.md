@@ -2,7 +2,7 @@
 
 Django request ElasticSearch logging
 
-## [WIP] Django support
+## Django support
 
 To log every django request insert logging middleware before AuthenticationMiddleware:
 
