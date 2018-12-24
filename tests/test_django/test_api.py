@@ -7,6 +7,7 @@ from django.test import Client
 from django.urls import reverse
 
 from drel.core import RequestLog, ResponseLog
+from drel.core.config import ELASTIC_SEARCH_RUN_TESTS
 from drel.core.es import get_es_docs
 from drel.django.api import DjangoFullRequestLogBuilder
 
@@ -47,7 +48,7 @@ def test_500_response(client: Client, log_builder: DjangoFullRequestLogBuilder):
 
 
 @pytest.mark.skipif(
-    not os.getenv("ELASTIC_SEARCH_RUN_TESTS"),
+    not ELASTIC_SEARCH_RUN_TESTS,
     reason="Set ELASTIC_SEARCH_RUN_TESTS env to enable Elastic Search tests",
 )
 def test_logging_middleware(freezer, test_es_index, client, log_builder, full_request_log_schema):
@@ -62,3 +63,12 @@ def test_logging_middleware(freezer, test_es_index, client, log_builder, full_re
     actual = get_es_docs()[0]
 
     assert expected == actual
+
+
+@pytest.mark.skipif(
+    not ELASTIC_SEARCH_RUN_TESTS,
+    reason="Set ELASTIC_SEARCH_RUN_TESTS env to enable Elastic Search tests",
+)
+def test_non_post_requests_logging(client, test_es_index, ):
+    response: JsonResponse = client.get(reverse("success"))
+    assert not len(get_es_docs())

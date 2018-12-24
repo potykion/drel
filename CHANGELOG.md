@@ -2,6 +2,11 @@
 
 ## Unreleased 
 
+### Added 
+
+- django.LoggingMiddleware: Ignore logging some requests via config.IGNORE_LOGGING_HANDLER (by default ignore non POST requests)
+- es.get_index_docs: return empty list on index not found
+
 ### Fixed
 
 - Fix Elastic Search tests run on ELASTIC_SEARCH_RUN_TESTS disabled

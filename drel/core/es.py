@@ -1,6 +1,7 @@
 from operator import itemgetter
 from typing import Dict, Optional, List
 
+from elasticsearch import NotFoundError
 from marshmallow.schema import BaseSchema
 
 from drel.core import config
@@ -43,5 +44,9 @@ def get_from_es(doc_id: str) -> Dict:
 
 def get_es_docs(index: Optional[str] = None, size: int = 20) -> List[Dict]:
     index = index or config.INDEX_NAME_GETTER()
-    result = config.ELASTIC_SEARCH.search(index=index, size=size)
-    return list(map(itemgetter("_source"), result["hits"]["hits"]))
+    try:
+        result = config.ELASTIC_SEARCH.search(index=index, size=size)
+    except NotFoundError:
+        return []
+    else:
+        return list(map(itemgetter("_source"), result["hits"]["hits"]))

@@ -2,7 +2,7 @@ from typing import Dict, Callable
 
 from django.http import HttpRequest, HttpResponse, RawPostDataException
 
-from drel.core import BaseFullRequestLogBuilder, log_to_es, ResponseLog, RequestLog
+from drel.core import BaseFullRequestLogBuilder, log_to_es, ResponseLog, RequestLog, config
 from drel.utils import to_json
 
 
@@ -12,6 +12,9 @@ class LoggingMiddleware:
 
     def __call__(self, request: HttpRequest) -> HttpResponse:
         response = self.get_response(request)
+
+        if config.IGNORE_LOGGING_HANDLER(request):
+            return response
 
         log_entry = DjangoFullRequestLogBuilder(user=request.user)(request, response)
         log_to_es(log_entry)

@@ -3,10 +3,11 @@ import threading
 import uuid
 from typing import Callable, Dict
 
+from django.http import HttpRequest
 from elasticsearch import Elasticsearch
 from marshmallow.schema import BaseSchema
 
-from drel.core.utils import handle_es_exception, EmailUserSchema, get_index_name
+from drel.core.utils import handle_es_exception, EmailUserSchema, get_index_name, log_only_post
 
 request_id_storage = threading.local()
 request_id_storage.request_id = str(uuid.uuid4())
@@ -32,3 +33,5 @@ INDEX_NAME_GETTER: Callable[[], str] = get_index_name
 APPLICATION = "default"
 DEFAULT_LOG_TYPE = "default"
 USER_SERIALIZER: BaseSchema = EmailUserSchema()
+
+IGNORE_LOGGING_HANDLER: Callable[[HttpRequest], bool] = log_only_post
