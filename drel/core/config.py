@@ -4,14 +4,14 @@ import uuid
 from typing import Callable, Dict
 
 from elasticsearch import Elasticsearch
-from marshmallow import Schema, fields
 from marshmallow.schema import BaseSchema
 
-from drel.utils import datetime_to_week_range
+from drel.core.utils import handle_es_exception, EmailUserSchema, get_index_name
 
 request_id_storage = threading.local()
 request_id_storage.request_id = str(uuid.uuid4())
 
+# Elastic Search options
 ELASTIC_SEARCH: Elasticsearch = Elasticsearch(
     hosts=[
         {
@@ -21,32 +21,13 @@ ELASTIC_SEARCH: Elasticsearch = Elasticsearch(
     ]
 )
 
-APPLICATION = "default"
-
-
-def get_index_name() -> str:
-    week_start, week_end = datetime_to_week_range()
-    return f"logs-{week_start.date()}-{week_end.date()}"
-
+ELASTIC_SEARCH_REFRESH_ON_INSERT = bool(os.getenv("ELASTIC_SEARCH_REFRESH_ON_INSERT"))
+ELASTIC_SEARCH_EXCEPTION_HANDLER: Callable[[str, Dict, Exception], None] = handle_es_exception
+ELASTIC_SEARCH_DOC_TYPE = "default"
 
 INDEX_NAME_GETTER: Callable[[], str] = get_index_name
 
-
-class EmailUserSchema(Schema):
-    email = fields.Email()
-
-
-USER_SERIALIZER: BaseSchema = EmailUserSchema()
-
-DOC_TYPE = "default"
-
+# log specific options
+APPLICATION = "default"
 DEFAULT_LOG_TYPE = "default"
-
-ELASTIC_SEARCH_REFRESH_ON_INSERT = bool(os.getenv("ELASTIC_SEARCH_REFRESH_ON_INSERT"))
-
-
-def handle_es_exception(index: str, doc: Dict, exception: Exception) -> None:
-    raise exception
-
-
-ELASTIC_SEARCH_EXCEPTION_HANDLER: Callable[[str, Dict, Exception], None] = handle_es_exception
+USER_SERIALIZER: BaseSchema = EmailUserSchema()
