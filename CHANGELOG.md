@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased 
+
+### Fixed
+
+- Fix Elastic Search tests run on ELASTIC_SEARCH_RUN_TESTS disabled
+
 ## 0.1.1 - 2018-12-21
 
 ### Changed  
