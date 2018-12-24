@@ -4,6 +4,7 @@ from typing import Dict, Optional, List
 from marshmallow.schema import BaseSchema
 
 from drel.core import config
+from drel.core.config import ELASTIC_SEARCH_RUN_TESTS
 from drel.core.models import FullRequestLog
 from drel.core.schemas import FullRequestLogSchema
 
@@ -15,6 +16,9 @@ def log_to_es(log: FullRequestLog) -> Optional[str]:
 
 
 def write_to_es(doc: Dict) -> Optional[str]:
+    if not ELASTIC_SEARCH_RUN_TESTS:
+        return None
+
     index = config.INDEX_NAME_GETTER()
     try:
         inserted_doc = config.ELASTIC_SEARCH.index(

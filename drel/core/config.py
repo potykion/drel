@@ -24,6 +24,7 @@ ELASTIC_SEARCH: Elasticsearch = Elasticsearch(
 ELASTIC_SEARCH_REFRESH_ON_INSERT = bool(os.getenv("ELASTIC_SEARCH_REFRESH_ON_INSERT"))
 ELASTIC_SEARCH_EXCEPTION_HANDLER: Callable[[str, Dict, Exception], None] = handle_es_exception
 ELASTIC_SEARCH_DOC_TYPE = "default"
+ELASTIC_SEARCH_RUN_TESTS = bool(os.getenv("ELASTIC_SEARCH_RUN_TESTS"))
 
 INDEX_NAME_GETTER: Callable[[], str] = get_index_name
 
