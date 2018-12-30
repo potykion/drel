@@ -2,6 +2,20 @@
 
 ## Unreleased 
 
+## Added 
+
+- drel.django.mail_admins_on_es_exception - Send Elastic Search exception info to Django ADMINS
+
+    Usage: 
+    
+    ```python
+    from drel import config
+    from drel.django import mail_admins_on_es_exception
+    
+    config.ELASTIC_SEARCH_EXCEPTION_HANDLER = mail_admins_on_es_exception
+    ```
+
+
 ### Fixed
 
 - Set ELASTIC_SEARCH_RUN_TESTS == True by default due to logging should be enabled in production by default 

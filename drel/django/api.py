@@ -1,5 +1,6 @@
 from typing import Dict, Callable
 
+from django.core.mail import mail_admins
 from django.http import HttpRequest, HttpResponse, RawPostDataException
 
 from drel.core import BaseFullRequestLogBuilder, log_to_es, ResponseLog, RequestLog, config
@@ -45,3 +46,18 @@ def get_request_headers(request: HttpRequest) -> Dict:
 
 def get_response_data(response: HttpResponse) -> Dict:
     return to_json(response.content)
+
+
+def mail_admins_on_es_exception(index: str, doc: Dict, exception: Exception) -> None:
+    message = _build_exception_message(index, doc, exception)
+    mail_admins("Logging to Elastic Search failed", message)
+
+
+def _build_exception_message(index: str, doc: Dict, exception: Exception) -> str:
+    return f"""Index: {index}
+
+Doc to insert: {doc}
+
+Exception class: {exception.__class__}
+
+Exception details: {exception}"""
