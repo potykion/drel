@@ -5,6 +5,7 @@
 ### Fixed
 
 - Set ELASTIC_SEARCH_RUN_TESTS == True by default due to logging should be enabled in production by default 
+- Fix versions in setup.py
 
 ## 0.2.0 - 2018-12-24
 

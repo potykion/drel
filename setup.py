@@ -5,10 +5,10 @@ with open("README.md") as f:
 
 install_requires = [
     "django>=1.11",
-    "requests>=2.18",
+    "requests>=2.18.0",
     "elasticsearch>=6.0.0,<7.0.0",
-    "marshmallow>=2.16,<3.0",
-    "attrs>=18.2"
+    "marshmallow>=2.16.0,<3.0.0",
+    "attrs>=18.1.0"
 ]
 
 setuptools.setup(
