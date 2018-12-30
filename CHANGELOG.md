@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased 
+
+### Fixed
+
+- Set ELASTIC_SEARCH_RUN_TESTS == True by default due to logging should be enabled in production by default 
+
 ## 0.2.0 - 2018-12-24
 
 ### Added 
