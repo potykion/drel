@@ -26,6 +26,6 @@ class FullRequestLog:
     response: ResponseLog
     type: str = config.DEFAULT_LOG_TYPE
     request_id: str = attr.ib(default=request_id_storage.request_id)
-    timestamp: datetime = attr.ib(factory=lambda: datetime.now())
+    timestamp: datetime = attr.ib(factory=lambda: datetime.utcnow())
     app: str = attr.ib(default=config.APPLICATION)
     user: Dict = attr.ib(factory=dict)

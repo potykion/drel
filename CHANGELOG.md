@@ -1,5 +1,11 @@
 # Changelog
 
+## Unrealesed 
+
+### Fixed
+
+- Fix non-UTC datetime default for FullRequestLog.timestamp
+
 ## 0.3.0 - 2018-12-31
 
 ### Added 
