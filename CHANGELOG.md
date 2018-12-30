@@ -1,6 +1,10 @@
 # Changelog
 
-## Unrealesed 
+## Unreleased 
+
+### Added
+
+- drel.requests.get - like requests.get, but returns request, response tuple
 
 ### Fixed
 

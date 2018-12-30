@@ -34,3 +34,10 @@ def post(*args: Any, **kwargs: Any) -> Tuple[Request, Response]:
     session = requests.Session()
     response = session.send(request.prepare())
     return request, response
+
+
+def get(*args: Any, **kwargs: Any) -> Tuple[Request, Response]:
+    request = requests.Request("GET", *args, **kwargs)
+    session = requests.Session()
+    response = session.send(request.prepare())
+    return request, response
