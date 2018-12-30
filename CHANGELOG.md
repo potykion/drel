@@ -1,8 +1,8 @@
 # Changelog
 
-## Unreleased 
+## 0.3.0 - 2018-12-31
 
-## Added 
+### Added 
 
 - drel.django.mail_admins_on_es_exception - Send Elastic Search exception info to Django ADMINS
 
@@ -14,7 +14,6 @@
     
     config.ELASTIC_SEARCH_EXCEPTION_HANDLER = mail_admins_on_es_exception
     ```
-
 
 ### Fixed
 
