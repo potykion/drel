@@ -17,6 +17,8 @@ def to_json(object_: Any) -> Dict:
     {'content': 'sam'}
     >>> to_json({'key': 'value'})
     {'key': 'value'}
+    >>> to_json(b'{"data":"871000010171326_58450_2979766647"}')
+    {'data': '871000010171326_58450_2979766647'}
     """
     if isinstance(object_, Dict):
         return object_
