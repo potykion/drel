@@ -4,7 +4,8 @@
 
 ### Fixed
 
-- Load ELASTIC_SEARCH_RUN_TESTS from config instead of absolute import 
+- Load ELASTIC_SEARCH_RUN_TESTS from config instead of absolute import
+- drel.django.LoggingMiddleware: Refresh request id on every request 
 
 ## 0.4.0 - 2018-12-31
 

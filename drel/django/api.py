@@ -1,9 +1,11 @@
+import uuid
 from typing import Dict, Callable
 
 from django.core.mail import mail_admins
 from django.http import HttpRequest, HttpResponse, RawPostDataException
 
 from drel.core import BaseFullRequestLogBuilder, log_to_es, ResponseLog, RequestLog, config
+from drel.core.config import request_id_storage
 from drel.utils import to_json
 
 
@@ -12,6 +14,8 @@ class LoggingMiddleware:
         self.get_response = get_response
 
     def __call__(self, request: HttpRequest) -> HttpResponse:
+        request_id_storage.request_id = str(uuid.uuid4())
+
         response = self.get_response(request)
 
         if config.IGNORE_LOGGING_HANDLER(request):
