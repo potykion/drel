@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- Load ELASTIC_SEARCH_RUN_TESTS from config instead of absolute import 
+
 ## 0.4.0 - 2018-12-31
 
 ### Added

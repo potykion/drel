@@ -5,7 +5,7 @@ import responses
 from requests import Request
 from requests import Session
 
-from drel.core.config import ELASTIC_SEARCH_RUN_TESTS
+from drel.core import config
 from drel.core.es import get_from_es
 from drel.core.models import FullRequestLog
 from drel.core.models import RequestLog
@@ -73,7 +73,7 @@ def test_full_request_to_log(
 
 
 @pytest.mark.skipif(
-    not ELASTIC_SEARCH_RUN_TESTS,
+    not config.ELASTIC_SEARCH_RUN_TESTS,
     reason="Set ELASTIC_SEARCH_RUN_TESTS env to enable Elastic Search tests",
 )
 def test_requests_log_insert_to_es(
