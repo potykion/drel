@@ -3,7 +3,7 @@ from typing import Any, Dict, Tuple, Optional
 import requests
 from requests import Response, Request
 
-from drel.core import BaseFullRequestLogBuilder, RequestLog, ResponseLog, log_to_es
+from drel.core import BaseFullRequestLogBuilder, log_to_es
 from drel.utils import to_json
 
 
@@ -14,19 +14,24 @@ def log(request: Request, response: Response, **builder_kwargs: Any) -> Optional
 
 
 class RequestsFullRequestLogBuilder(BaseFullRequestLogBuilder):
-    def request_to_log(self, request: Request) -> RequestLog:
+    def _get_request_url(self, request: Any) -> str:
         assert request.url
-        return RequestLog(request.url, request.data or request.json, dict(request.headers))
+        return request.url
 
-    def response_to_log(self, response: Response) -> ResponseLog:
-        data = self.__get_response_data(response)
-        return ResponseLog(data, response.status_code)
+    def _get_request_data(self, request: Any) -> Dict:
+        return request.data or request.json
 
-    def __get_response_data(self, response: Response) -> Dict:
+    def _get_request_headers(self, request: Any) -> Dict:
+        return dict(request.headers)
+
+    def _get_response_data(self, response: Any) -> Dict:
         try:
             return response.json()
         except ValueError:
             return to_json(response.content)
+
+    def _get_response_status(self, response: Any) -> int:
+        return response.status_code
 
 
 def post(*args: Any, **kwargs: Any) -> Tuple[Request, Response]:

@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased 
+
+### Fixed 
+
+- Fix logging Django requests with json data
+
 ## 0.4.1 - 2019-01-01
 
 ### Fixed

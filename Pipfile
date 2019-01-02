@@ -26,6 +26,8 @@ pytest-dotenv = "*"
 pytest-freezegun = "*"
 twine = "*"
 "bump2version" = "*"
+python-dotenv = "*"
+django-rest-framework = "*"
 
 [requires]
 python_version = "3.6"

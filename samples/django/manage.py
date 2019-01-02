@@ -2,7 +2,10 @@
 import os
 import sys
 
+from dotenv import find_dotenv, load_dotenv
+
 if __name__ == '__main__':
+    load_dotenv(find_dotenv())
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'samples.django.echo.settings')
     try:
         from django.core.management import execute_from_command_line
