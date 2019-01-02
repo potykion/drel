@@ -1,6 +1,6 @@
 # Changelog
 
-## Unrealeased 
+## 0.4.3 - 2019-01-03 
 
 ### Fixed
 
