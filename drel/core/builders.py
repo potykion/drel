@@ -12,11 +12,17 @@ class BaseFullRequestLogBuilder:
         self.response_log: Optional[ResponseLog] = None
 
     def __call__(self, request: Any = None, response: Any = None) -> FullRequestLog:
-        request_log = self.request_log or (self.request_to_log(request) if request else None)
-        assert request_log
+        if self.request_log:
+            request_log = self.request_log
+        else:
+            assert request is not None
+            request_log = self.request_to_log(request)
 
-        response_log = self.response_log or (self.response_to_log(response) if response else None)
-        assert response_log
+        if self.response_log:
+            response_log = self.response_log
+        else:
+            assert response is not None
+            response_log = self.response_to_log(response)
 
         return FullRequestLog(
             request=request_log,

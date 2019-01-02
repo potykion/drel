@@ -47,6 +47,19 @@ def requests_response(requests_request):
 
 
 @pytest.fixture()
+def error_requests_response(requests_request):
+    with responses.RequestsMock() as responses_:
+        responses_.add(
+            Response("POST", requests_request.url, json={"status": "error"}, status=400)
+        )
+
+        session = Session()
+        response = session.send(requests_request.prepare())
+
+        return response
+
+
+@pytest.fixture()
 def full_request_log(log_builder, requests_request, requests_response):
     return log_builder(requests_request, requests_response)
 

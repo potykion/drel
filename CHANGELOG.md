@@ -1,5 +1,11 @@
 # Changelog
 
+## Unrealeased 
+
+### Fixed
+
+- Fix logging non 200 status requests.Response's
+
 ## 0.4.2 - 2019-01-02 
 
 ### Fixed 
