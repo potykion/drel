@@ -56,3 +56,31 @@ from drel import config
 
 config.APPLICATION = "django_app"
 ``` 
+
+
+### Sample Django configuration
+
+```python
+from django.http import HttpRequest
+from drel.core import config
+from drel.django import mail_admins_on_es_exception
+
+def ignore_logging_handler(request: HttpRequest) -> bool:
+    return any([
+        request.path == "/api/register_device/",
+        request.method != "POST",
+    ])
+
+
+config.ELASTIC_SEARCH_EXCEPTION_HANDLER = mail_admins_on_es_exception
+config.INDEX_NAME_GETTER = lambda: "django_app_2019-01-01"
+config.APPLICATION = "django_app"
+config.IGNORE_LOGGING_HANDLER = ignore_logging_handler
+```
+
+This configuration:
+ 
+ - mail admins on Elastic Search index exception
+ - ignore logging non-POST and /api/register_device/ requests
+ - insert docs to django_app_2019-01-01 index
+ - application field = django_app
