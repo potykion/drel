@@ -36,7 +36,7 @@ def test_request_with_json_to_log(log_builder):
     ],
 )
 def test_response_to_log(
-    log_builder: RequestsFullRequestLogBuilder, requests_request, response_params
+        log_builder: RequestsFullRequestLogBuilder, requests_request, response_params
 ):
     responses.add("POST", requests_request.url, **response_params)
 
@@ -62,7 +62,7 @@ def test_500_response_to_log(log_builder, requests_request):
 
 
 def test_full_request_to_log(
-    freezer, log_builder: RequestsFullRequestLogBuilder, requests_request, requests_response
+        freezer, log_builder: RequestsFullRequestLogBuilder, requests_request, requests_response
 ):
     actual_log = log_builder(requests_request, requests_response)
     expected_log = FullRequestLog(
@@ -77,10 +77,21 @@ def test_full_request_to_log(
     reason="Set ELASTIC_SEARCH_RUN_TESTS env to enable Elastic Search tests",
 )
 def test_requests_log_insert_to_es(
-    freezer, test_es_index, requests_request, requests_response, serialized_full_request_log,
+        freezer, test_es_index, requests_request, requests_response, serialized_full_request_log,
 ):
     doc_id = log(requests_request, requests_response)
     actual_full_request_log = get_from_es(doc_id)
     assert actual_full_request_log == serialized_full_request_log
 
 
+@pytest.mark.skipif(
+    not config.ELASTIC_SEARCH_RUN_TESTS,
+    reason="Set ELASTIC_SEARCH_RUN_TESTS env to enable Elastic Search tests",
+)
+def test_requests_logging_with_duration(
+        freezer, test_es_index, requests_request, requests_response, serialized_full_request_log,
+):
+    duration = 1.2
+    doc_id = log(requests_request, requests_response, duration=duration)
+    actual_full_request_log = get_from_es(doc_id)
+    assert actual_full_request_log["stats"]["duration"] == duration

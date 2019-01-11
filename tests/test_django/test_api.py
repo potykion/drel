@@ -62,6 +62,7 @@ def test_logging_middleware_with_post_data(freezer, test_es_index, client, log_b
 
     expected, _ = full_request_log_schema.dump(log)
     actual = get_es_docs()[0]
+    actual.pop("stats", None)
 
     assert expected == actual
 
@@ -82,6 +83,7 @@ def test_logging_middleware_with_json_data(freezer, test_es_index, client, log_b
 
     expected, _ = full_request_log_schema.dump(log)
     actual = get_es_docs()[0]
+    actual.pop("stats", None)
 
     assert expected == actual
 
@@ -122,4 +124,4 @@ def test_logged_django_request_contains_duration(client, test_es_index):
 
     log = get_es_docs()[0]
 
-    assert log["stats"]["duration"]
+    assert log["stats"]["duration"] is not None

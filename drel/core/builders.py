@@ -31,7 +31,7 @@ class BaseFullRequestLogBuilder:
             user=self._serialize_user(user or self.user),
         )
 
-        if duration:
+        if duration is not None:
             log.stats["duration"] = duration
 
         return log
