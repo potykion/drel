@@ -1,14 +1,16 @@
 # Changelog
 
-## Unreleased 
+## 0.5.0 - 2019-01-11
 
 ### Added
+
 - drel.core.builders.BaseFullRequestLogBuilder: user can be passed into dunder call method
 - drel.core.schemas.FullRequestLogSchema: stats - dict with request stats (like duration)
 - drel.requests.api.log: duration kwarg
 - drel.django.api.LoggingMiddleware: duration logging 
 
 ### Fixed
+
 - drel.django.LoggingMiddleware: log user after request processing 
 
 ## 0.4.2 - 2019-01-02 
