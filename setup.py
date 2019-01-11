@@ -13,7 +13,7 @@ install_requires = [
 
 setuptools.setup(
     name="drel",
-    version="0.5.0",
+    version="0.5.1",
     author="Leybovich Nikita",
     author_email="potykion@gmail.com",
     description="Django request ElasticSearch logging",
