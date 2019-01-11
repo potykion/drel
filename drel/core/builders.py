@@ -12,7 +12,11 @@ class BaseFullRequestLogBuilder:
         self.response_log: Optional[ResponseLog] = None
 
     def __call__(
-        self, request: Any = None, response: Any = None, user: Any = None
+        self,
+        request: Any = None,
+        response: Any = None,
+        user: Any = None,
+        duration: Optional[float] = None,
     ) -> FullRequestLog:
         request_log = self.request_log or (self.request_to_log(request) if request else None)
         assert request_log
@@ -20,12 +24,17 @@ class BaseFullRequestLogBuilder:
         response_log = self.response_log or (self.response_to_log(response) if response else None)
         assert response_log
 
-        return FullRequestLog(
+        log = FullRequestLog(
             request=request_log,
             response=response_log,
             type=self.type,
             user=self._serialize_user(user or self.user),
         )
+
+        if duration:
+            log.stats["duration"] = duration
+
+        return log
 
     def _serialize_user(self, user: Any) -> Dict:
         user_data, _ = config.USER_SERIALIZER.dump(user)

@@ -15,14 +15,29 @@ class ResponseLogSchema(Schema):
         fields = ("data", "status")
 
 
+class StatsSchema(Schema):
+    class Meta:
+        fields = ("duration",)
+
+
 class FullRequestLogSchema(Schema):
     request = fields.Nested(RequestLogSchema)
     response = fields.Nested(ResponseLogSchema)
     timestamp = fields.DateTime()
     user = fields.Nested(config.USER_SERIALIZER)
+    stats = fields.Nested(StatsSchema)
 
     class Meta:
-        fields = ("type", "request", "response", "request_id", "timestamp", "app", "user")
+        fields = (
+            "type",
+            "request",
+            "response",
+            "request_id",
+            "timestamp",
+            "app",
+            "user",
+            "stats",
+        )
 
     @post_dump
     def append_type(self, data: Dict) -> Dict:

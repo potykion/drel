@@ -29,3 +29,4 @@ class FullRequestLog:
     timestamp: datetime = attr.ib(factory=lambda: datetime.utcnow())
     app: str = attr.ib(default=config.APPLICATION)
     user: Dict = attr.ib(factory=dict)
+    stats: Dict = attr.ib(factory=dict)

@@ -110,3 +110,16 @@ def test_log_django_request_with_user(client, test_es_index):
     log = get_es_docs()[0]
 
     assert log["user"]["email"] == email
+
+
+@pytest.mark.skipif(
+    not config.ELASTIC_SEARCH_RUN_TESTS,
+    reason="Set ELASTIC_SEARCH_RUN_TESTS env to enable Elastic Search tests",
+)
+def test_logged_django_request_contains_duration(client, test_es_index):
+
+    client.post(reverse("success"))
+
+    log = get_es_docs()[0]
+
+    assert log["stats"]["duration"]
