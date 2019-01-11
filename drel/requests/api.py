@@ -7,8 +7,10 @@ from drel.core import BaseFullRequestLogBuilder, log_to_es
 from drel.utils import to_json
 
 
-def log(request: Request, response: Response, **builder_kwargs: Any) -> Optional[str]:
-    log_entry = RequestsFullRequestLogBuilder(**builder_kwargs)(request, response)
+def log(request: Request, response: Response, **kwargs: Any) -> Optional[str]:
+    duration = kwargs.pop("duration", None)
+
+    log_entry = RequestsFullRequestLogBuilder(**kwargs)(request, response, duration=duration)
 
     return log_to_es(log_entry)
 

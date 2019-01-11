@@ -6,6 +6,7 @@ from django.http import HttpRequest, HttpResponse, RawPostDataException
 
 from drel.core import BaseFullRequestLogBuilder, log_to_es, config
 from drel.core.config import request_id_storage
+from drel.core.utils import timeit
 from drel.utils import to_json
 
 
@@ -19,14 +20,15 @@ class LoggingMiddleware:
 
         request_id_storage.request_id = str(uuid.uuid4())
 
-        builder = DjangoFullRequestLogBuilder(user=request.user)
+        builder = DjangoFullRequestLogBuilder()
 
         builder.request_to_log(request)
 
-        response = self.get_response(request)
+        response, duration = timeit(self.get_response, request)
+
         builder.response_to_log(response)
 
-        log_entry = builder()
+        log_entry = builder(user=request.user, duration=duration)
         log_to_es(log_entry)
 
         return response

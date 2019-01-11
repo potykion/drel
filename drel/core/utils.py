@@ -1,4 +1,5 @@
-from typing import Dict
+from datetime import datetime
+from typing import Dict, Tuple, Any, Callable
 
 from django.http import HttpRequest
 from marshmallow import Schema, fields
@@ -21,3 +22,11 @@ def get_index_name() -> str:
 
 def log_only_post(request: HttpRequest) -> bool:
     return request.method != "POST"
+
+
+def timeit(func: Callable, *args: Any, **kwargs: Any) -> Tuple[Any, float]:
+    start = datetime.now()
+    result = func(*args, **kwargs)
+    end = datetime.now()
+    took_seconds = (end - start).total_seconds()
+    return result, took_seconds
