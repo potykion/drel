@@ -19,14 +19,14 @@ class LoggingMiddleware:
 
         request_id_storage.request_id = str(uuid.uuid4())
 
-        builder = DjangoFullRequestLogBuilder(user=request.user)
+        builder = DjangoFullRequestLogBuilder()
 
         builder.request_to_log(request)
 
         response = self.get_response(request)
         builder.response_to_log(response)
 
-        log_entry = builder()
+        log_entry = builder(user=request.user)
         log_to_es(log_entry)
 
         return response

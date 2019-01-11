@@ -19,7 +19,7 @@ class FullRequestLogSchema(Schema):
     request = fields.Nested(RequestLogSchema)
     response = fields.Nested(ResponseLogSchema)
     timestamp = fields.DateTime()
-    user = config.USER_SERIALIZER
+    user = fields.Nested(config.USER_SERIALIZER)
 
     class Meta:
         fields = ("type", "request", "response", "request_id", "timestamp", "app", "user")

@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased 
+
+### Added
+- drel.core.builders.BaseFullRequestLogBuilder: user can be passed into dunder call method
+
+### Fixed
+- drel.django.LoggingMiddleware: log user after request processing 
+
 ## 0.4.2 - 2019-01-02 
 
 ### Fixed 
